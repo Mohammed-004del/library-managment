@@ -1,0 +1,46 @@
+@startuml
+class User {
+  - id: int
+  - name: string
+  - contact: string
+  - membershipStatus: string
+}
+
+class Book {
+  - id: int
+  - title: string
+  - author: string
+  - available: boolean
+}
+
+class Transaction {
+  - id: int
+  - checkoutDate: Date
+  - dueDate: Date
+  - returned: boolean
+  - fine: double
+  - damaged: boolean
+  - reservation: boolean
+}
+
+class Librarian {
+  + checkOutBook()
+  + returnBook()
+  + collectFine()
+  + recordDamage()
+  + generateReports()
+}
+
+class Report {
+  + generateOverdueReport()
+  + generateInventoryReport()
+}
+
+User "1" -- "0..*" Transaction : makes
+Book "1" -- "0..*" Transaction : involved in
+Librarian "1" -- "0..*" Transaction : manages
+Transaction "*" -- "1" Book
+Transaction "*" -- "1" User
+Librarian --> Report : generates
+
+@enduml
